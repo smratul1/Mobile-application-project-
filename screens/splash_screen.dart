@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants/app_colors.dart';
 import '../providers/auth_provider.dart';
-import 'main_screen.dart';
-import 'auth/login_screen.dart';
+import './core/main_screen.dart';
+import './auth/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -40,29 +40,47 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _scheduleNavigation() async {
-    final auth = context.read<AuthProvider>();
-    while (auth.isLoading) {
-      if (!mounted) return;
-      await Future.delayed(const Duration(milliseconds: 100));
-    }
+  final auth = context.read<AuthProvider>();
+
+  while (auth.isLoading) {
+    print("Splash waiting... isLoading = ${auth.isLoading}");
+
     if (!mounted) return;
-    await Future.delayed(const Duration(milliseconds: 800));
-    _navigate();
+
+    await Future.delayed(const Duration(milliseconds: 100));
   }
 
+     print("Splash finished waiting");
+     print("Current User = ${auth.currentUser}");
+     print("Is Authenticated = ${auth.isAuthenticated}");
+
+  if (!mounted) return;
+
+  await Future.delayed(const Duration(milliseconds: 800));
+
+  _navigate();
+}
+
   void _navigate() {
-    if (!mounted) return;
-    final auth = context.read<AuthProvider>();
-    Navigator.of(context).pushReplacement(
-      PageRouteBuilder(
-        pageBuilder: (_, __, ___) =>
-            auth.currentUser != null ? const MainScreen() : const LoginScreen(),
-        transitionsBuilder: (_, anim, __, child) =>
-            FadeTransition(opacity: anim, child: child),
-        transitionDuration: const Duration(milliseconds: 500),
-      ),
-    );
-  }
+  if (!mounted) return;
+
+  final auth = context.read<AuthProvider>();
+
+  print("Navigate -> isAuthenticated = ${auth.isAuthenticated}");
+  print("Navigate -> currentUser = ${auth.currentUser}");
+
+  Navigator.of(context).pushReplacement(
+    PageRouteBuilder(
+      pageBuilder: (_, __, ___) =>
+          auth.isAuthenticated
+              ? const MainScreen()
+              : const LoginScreen(),
+      transitionsBuilder: (_, anim, __, child) =>
+          FadeTransition(opacity: anim, child: child),
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+  );
+}
 
   @override
   void dispose() {
@@ -107,7 +125,7 @@ class _SplashScreenState extends State<SplashScreen>
                       ),
                       child: ClipOval(
                         child: Image.asset(
-                          'assets/images/53b00508-2e5d-4c9f-92f0-bf69115795f9.jpg',
+                          'assets/images/logo.jpg',
                           fit: BoxFit.cover,
                           errorBuilder: (_, __, ___) => const Center(
                             child: Icon(

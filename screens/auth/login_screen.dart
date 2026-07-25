@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../constants/app_colors.dart';
 import '../../providers/auth_provider.dart';
-import '../main_screen.dart';
+import '../core/main_screen.dart';
 import 'signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         child: ClipOval(
                           child: Image.asset(
-                            'assets/images/53b00508-2e5d-4c9f-92f0-bf69115795f9.jpg',
+                             'assets/images/logo.jpg',
                             fit: BoxFit.cover,
                             errorBuilder: (_, __, ___) => const Center(
                               child: Icon(Icons.medication_rounded, size: 48, color: AppColors.primary),

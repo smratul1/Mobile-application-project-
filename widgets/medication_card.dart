@@ -13,27 +13,30 @@ class MedicationCard extends StatelessWidget {
   final MedicationModel medication;
   final VoidCallback? onDelete;
   final VoidCallback? onEdit;
+  final VoidCallback? onTap;
 
-  const MedicationCard({super.key, required this.medication, this.onDelete, this.onEdit});
+  const MedicationCard({super.key, required this.medication, this.onDelete, this.onEdit, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.card,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.border),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 8,
-              offset: const Offset(0, 2))
-        ],
-      ),
-      child: Row(
-        children: [
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.card,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.border),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 8,
+                offset: const Offset(0, 2))
+          ],
+        ),
+        child: Row(
+          children: [
           Container(
             width: 50,
             height: 50,
@@ -88,6 +91,7 @@ class MedicationCard extends StatelessWidget {
               onPressed: onDelete,
             ),
         ],
+      ),
       ),
     );
   }

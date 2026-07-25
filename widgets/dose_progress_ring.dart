@@ -71,10 +71,10 @@ class _RingPainter extends CustomPainter {
     final rect = Rect.fromCircle(center: center, radius: radius);
 
     final progressPaint = Paint()
-      ..shader = SweepGradient(
+      ..shader = const SweepGradient(
         startAngle: -math.pi / 2,
         endAngle: 3 * math.pi / 2,
-        colors: const [AppColors.gradientStart, AppColors.gradientEnd],
+        colors: [AppColors.gradientStart, AppColors.gradientEnd],
       ).createShader(rect)
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
